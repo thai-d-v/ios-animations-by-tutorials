@@ -95,6 +95,9 @@ class ViewController: UIViewController {
     self.cloud2.alpha = 0
     self.cloud3.alpha = 0
     self.cloud4.alpha = 0
+
+    self.loginButton.center.y += 30
+    self.loginButton.alpha = 0
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -102,10 +105,10 @@ class ViewController: UIViewController {
     UIView.animate(withDuration: 0.5) {
       self.heading.center.x += self.view.bounds.width
     }
-    UIView.animate(withDuration: 0.5, delay: 0.3) {
+    UIView.animate(withDuration: 0.5, delay: 0.3, usingSpringWithDamping: 0.6, initialSpringVelocity: 0) {
       self.username.center.x += self.view.bounds.width
     }
-    UIView.animate(withDuration: 0.5, delay: 0.4, options: []) {
+    UIView.animate(withDuration: 0.5, delay: 0.4, usingSpringWithDamping: 0.6, initialSpringVelocity: 0) {
       self.password.center.x += self.view.bounds.width
     }
 
@@ -113,12 +116,41 @@ class ViewController: UIViewController {
     UIView.animate(withDuration: 0.5, delay: 0.7) { self.cloud2.alpha = 1 }
     UIView.animate(withDuration: 0.5, delay: 0.9) { self.cloud3.alpha = 1 }
     UIView.animate(withDuration: 0.5, delay: 1.1) { self.cloud4.alpha = 1 }
+
+    UIView.animate(
+      withDuration: 0.5,
+      delay: 0.5,
+      usingSpringWithDamping: 0.5,
+      initialSpringVelocity: 0) {
+        self.loginButton.center.y -= 30
+        self.loginButton.alpha = 1.0
+      }
   }
   
   // MARK: further methods
   
   @IBAction func login() {
     view.endEditing(true)
+    UIView.animate(
+      withDuration: 1.5,
+      delay: 0,
+      usingSpringWithDamping: 0.2,
+      initialSpringVelocity: 0) {
+        self.loginButton.bounds.size.width += 80
+      }
+
+    UIView.animate(
+      withDuration: 0.33,
+      delay: 0,
+      usingSpringWithDamping: 0.7,
+      initialSpringVelocity: 0) {
+        self.loginButton.center.y += 60
+        self.loginButton.backgroundColor = UIColor(red: 0.85, green: 0.83, blue: 0.45, alpha: 1)
+
+        self.spinner.center = CGPoint(x: 40, y: self.loginButton.frame.size.height/2)
+        self.spinner.alpha = 1
+      }
+
   }
   
   // MARK: UITextFieldDelegate
