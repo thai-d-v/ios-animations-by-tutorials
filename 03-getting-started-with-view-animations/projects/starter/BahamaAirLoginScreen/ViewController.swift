@@ -86,10 +86,33 @@ class ViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+
+    self.heading.center.x -= self.view.bounds.width
+    self.username.center.x -= self.view.bounds.width
+    self.password.center.x -= self.view.bounds.width
+
+    self.cloud1.alpha = 0
+    self.cloud2.alpha = 0
+    self.cloud3.alpha = 0
+    self.cloud4.alpha = 0
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
+    UIView.animate(withDuration: 0.5) {
+      self.heading.center.x += self.view.bounds.width
+    }
+    UIView.animate(withDuration: 0.5, delay: 0.3) {
+      self.username.center.x += self.view.bounds.width
+    }
+    UIView.animate(withDuration: 0.5, delay: 0.4, options: []) {
+      self.password.center.x += self.view.bounds.width
+    }
+
+    UIView.animate(withDuration: 0.5, delay: 0.5) { self.cloud1.alpha = 1 }
+    UIView.animate(withDuration: 0.5, delay: 0.7) { self.cloud2.alpha = 1 }
+    UIView.animate(withDuration: 0.5, delay: 0.9) { self.cloud3.alpha = 1 }
+    UIView.animate(withDuration: 0.5, delay: 1.1) { self.cloud4.alpha = 1 }
   }
   
   // MARK: further methods
