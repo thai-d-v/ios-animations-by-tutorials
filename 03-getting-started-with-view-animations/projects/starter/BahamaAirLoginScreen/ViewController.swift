@@ -98,6 +98,7 @@ class ViewController: UIViewController {
 
     self.loginButton.center.y += 30
     self.loginButton.alpha = 0
+    self.statusPosition = status.center
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -137,6 +138,8 @@ class ViewController: UIViewController {
       usingSpringWithDamping: 0.2,
       initialSpringVelocity: 0) {
         self.loginButton.bounds.size.width += 80
+      } completion: { _ in
+        self.showMessage(index: 0)
       }
 
     UIView.animate(
@@ -150,9 +153,34 @@ class ViewController: UIViewController {
         self.spinner.center = CGPoint(x: 40, y: self.loginButton.frame.size.height/2)
         self.spinner.alpha = 1
       }
-
   }
-  
+
+  func showMessage(index: Int) {
+    label.text = messages[index]
+
+    UIView.transition(with: status, duration: 0.33, options: [.curveEaseInOut, .transitionFlipFromBottom]) {
+      self.status.isHidden = false
+    } completion: { _ in
+      delay(2.0) {
+        if index < self.messages.count - 1 {
+          self.removeMessage(index: index)
+        } else {
+          // reset form
+        }
+      }
+    }
+  }
+
+  func removeMessage(index: Int) {
+    UIView.animate(withDuration: 0.33, delay: 0.0, options: [], animations: {
+      self.status.center.x += self.view.frame.size.width
+    }, completion: { _ in
+      self.status.isHidden = true
+      self.status.center = self.statusPosition
+      self.showMessage(index: index + 1)
+    })
+  }
+
   // MARK: UITextFieldDelegate
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
